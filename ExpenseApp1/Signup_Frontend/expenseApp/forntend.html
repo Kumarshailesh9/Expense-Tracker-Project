@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense App</title>
+</head>
+<body>
+    <h1>Add Your Expense</h1>
+    <form action="" method="post" onsubmit="expense(event)">
+        <label for="price">Price:</label>
+        <input type="number" id="price">
+        <label for="description">Description:</label>
+        <input type="text" id="des">
+        <select name="product" id="product">
+            <option value="electronic">electronic</option>
+            <option value="food">food</option>
+            <option value="movie">movie</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <ul id="items"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js" integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="expense.js"></script>
+</body>
+</html>
