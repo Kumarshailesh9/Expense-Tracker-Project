@@ -9,9 +9,11 @@ const sequelize = require("../util/database");
 // };
 
 
-const ITEM_PER_PAGE = 10;
+//const ITEM_PER_PAGE = 10;
 exports.getExpense = async (req, res) => {
     const page = +req.query.page|| 1;
+    const ITEM_PER_PAGE = +req.query.pageSize || 5;
+    console.log(ITEM_PER_PAGE);
     let totalItem;
     Expense.count()
     .then((total) => {
