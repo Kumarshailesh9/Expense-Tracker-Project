@@ -35,63 +35,124 @@ function parseJwt(token) {
     return JSON.parse(jsonPayload);
 }
 
+//////************ Pagination ******************/
 
-addEventListener('DOMContentLoaded', () => {
+// addEventListener('DOMContentLoaded', () => {
 
-    const page = 2;
 
+//     const page = 1;
+//     const pageSize = 7;
+
+//     const token = localStorage.getItem('token');
+//     const  isAdmin = parseJwt(token);
+//     if(isAdmin.ispremiumuser){
+//              showIspremiumUser();  
+//              showleaderbord();
+//     }
+//     axios
+//         .get(`http://localhost:3000/expense/add-expense?page=${page}&?pageSize=${pageSize}`, { headers : { Autherization: token}})
+//         .then(res => {
+//            // console.log(res.data);
+//             for(let i=0; i<res.data.expenses.length; i++){
+//                 showOnScr(res.data.expenses[i]);
+//             }  
+//             showPagination(res.data);
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         })
+// });
+
+
+// function showPagination({
+//     currentPage,
+//     hasNextPage,   
+//     nextPage,
+//     hasPreviosPage,
+//     previosPage,
+//     lastPage
+// }){
+
+//     pagination.innerHTML = '';
+
+//     if(previosPage){
+//         const btn2 = document.createElement('button');
+//         btn2.innerHTML = previosPage;
+//         btn2.addEventListener('click', () => getProducts(previosPage))
+//         pagination.appendChild(btn2);
+
+//     }
+//     const btn1 = document.createElement('button');
+//     btn1.innerHTML = `<h3>${currentPage}</h3>`;
+//     btn1.addEventListener('click', () => getProducts(currentPage))
+//     pagination.appendChild(btn1);
+
+//     if(hasNextPage){
+//         const btn3 = document.createElement('button');
+//         btn3.innerHTML = nextPage;
+//         btn3.addEventListener('click', () => getProducts(nextPage))
+//         pagination.appendChild(btn3);
+//     }
+
+// }
+
+/////*************Dianamic Pagination **********/
+document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
-    const  isAdmin = parseJwt(token);
-    if(isAdmin.ispremiumuser){
-             showIspremiumUser();  
-             showleaderbord();
+    const isAdmin = parseJwt(token);
+    const preferredPageSize = +localStorage.getItem('preferredPageSize') || 10;
+
+    if (isAdmin.ispremiumuser) {
+        showIspremiumUser();
+        showleaderbord();
     }
+
+    const page = 1;
+
     axios
-        .get(`http://localhost:3000/expense/add-expense?page=${page}`, { headers : { Autherization: token}})
+        .get(`http://localhost:3000/expense/add-expense?page=${page}&pageSize=${preferredPageSize}`, {
+            headers: { Autherization: token }
+        })
         .then(res => {
-           // console.log(res.data);
-            for(let i=0; i<res.data.expenses.length; i++){
+            for (let i = 0; i < res.data.expenses.length; i++) {
                 showOnScr(res.data.expenses[i]);
-            }  
-            showPagination(res.data);
+            }
+            //showPagination(res.data);
         })
         .catch(err => {
             console.log(err);
-        })
+        });
+
+    
+    const handlePageSizeChange = () => {
+        const pageSizeSelect = document.getElementById('pageSizeSelect');
+        const newPageSize = parseInt(pageSizeSelect.value);
+        localStorage.setItem('preferredPageSize', newPageSize);
+
+        location.reload();
+    };
+
+    
+    const pageSizeSelect = document.createElement('select');
+    pageSizeSelect.id = 'pageSizeSelect';
+    pageSizeSelect.addEventListener('change', handlePageSizeChange);
+
+   
+    const pageSizeOptions = [5, 10, 20, 30, 40];
+    for (const option of pageSizeOptions) {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.text = option;
+        pageSizeSelect.appendChild(optionElement);
+    }
+
+    
+    pageSizeSelect.value = preferredPageSize;
+
+   
+    document.body.appendChild(pageSizeSelect);
 });
 
-
-function showPagination({
-    currentPage,
-    hasNextPage,   
-    nextPage,
-    hasPreviosPage,
-    previosPage,
-    lastPage
-}){
-
-    pagination.innerHTML = '';
-
-    if(previosPage){
-        const btn2 = document.createElement('button');
-        btn2.innerHTML = previosPage;
-        btn2.addEventListener('click', () => getProducts(previosPage))
-        pagination.appendChild(btn2);
-
-    }
-    const btn1 = document.createElement('button');
-    btn1.innerHTML = `<h3>${currentPage}</h3>`;
-    btn1.addEventListener('click', () => getProducts(currentPage))
-    pagination.appendChild(btn1);
-
-    if(hasNextPage){
-        const btn3 = document.createElement('button');
-        btn3.innerHTML = nextPage;
-        btn3.addEventListener('click', () => getProducts(nextPage))
-        pagination.appendChild(btn3);
-    }
-
-}
 
 
 
@@ -99,7 +160,7 @@ function getProducts(page){
      const token = localStorage.getItem('token');
      const itemsContainer = document.getElementById('items');
     axios
-        .get(`http://localhost:3000/expense/add-expense?page=${page}`,{ headers : { Autherization: token}})
+        .get(`http://localhost:3000/expense/add-expense?page=${page}&?${pageSize}`,{ headers : { Autherization: token}})
         .then(res => {
             itemsContainer.innerHTML = '';
             for(let i=0; i<res.data.expenses.length; i++){
