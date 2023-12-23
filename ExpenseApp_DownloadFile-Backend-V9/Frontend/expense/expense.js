@@ -166,15 +166,18 @@ function download(){
 
 
 function numberDownloaded(){
-    const date1 = document.getElementById('dateInput').value;
+    const fulldate = document.getElementById('dateInput').value;
+    const desiredDate = fulldate.split(' ')[0];
+    console.log(desiredDate);
+    console.log(typeof(desiredDate));
     const dateDetails = {
-        date1
+        desiredDate
     }
     const token = localStorage.getItem('token');
     axios
     .post('http://localhost:3000/user/timesdownload',  dateDetails , { headers : { Autherization: token }})
     .then(res => {
-        console.log(res);
+        console.log(res.data.length);
     })
     .catch(err => {
         console.log(err);
