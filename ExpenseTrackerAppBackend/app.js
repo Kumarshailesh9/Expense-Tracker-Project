@@ -17,6 +17,9 @@ const ForgotPassword = require('./models/resetPassword');
 const Download = require('./models/download');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const axios = require('axios');
+
+
 
 
 
@@ -24,9 +27,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
 
-app.use(helmet());
+ app.use(helmet());
 app.use(morgan('combined', { stream : accessLogStream}));
 
 app.use(userRoute);
@@ -35,10 +39,20 @@ app.use(expenseRoute);
 
 app.use('/parchase', orderRoute);
 
-// Show leaderboard and download file is in premiumRoute
+// Show leaderboard and download file is in premiumRoute 11
 app.use(premiumRoute);
 
 app.use(passwordRoute);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get((req, res) => {
+    console.log('url', req.url);
+    res.sendFile(path.join(__dirname, `public/${req.url}`));
+    
+})
+
+
 
 
 Expense.belongsTo(User);
