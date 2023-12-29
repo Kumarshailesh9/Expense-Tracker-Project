@@ -7,7 +7,7 @@ function resetPassword(e){
     };
    console.log(resetDetails);
     axios
-        .post('http://localhost:3000/forgotpassword', resetDetails)
+        .post('http://52.36.97.102:3000/forgotpassword', resetDetails)
         .then(res => {
             console.log('form submitted for sending mail');
             alert('Please Check Your Email');
