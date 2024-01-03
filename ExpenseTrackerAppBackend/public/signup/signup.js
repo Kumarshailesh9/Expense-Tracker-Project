@@ -13,7 +13,7 @@ function signup(e){
     console.log(signupDetails);
 
     axios
-        .post('http://52.36.97.102:3000/user/signup', signupDetails)
+        .post('http://localhost:3000/user/signup', signupDetails)
         .then(res => {
             //showOnScr(res.data);
             console.log(res.data);
@@ -25,7 +25,7 @@ function signup(e){
 
 addEventListener('DOMContentLoaded', () => {
     axios
-        .get('http://52.36.97.102:3000/user/signup')
+        .get('http://localhost:3000/user/signup')
         .then(res => {
             for(let i=0; i<res.data.length; i++){
                 //showOnScr(res.data[i]);

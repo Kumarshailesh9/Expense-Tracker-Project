@@ -11,7 +11,7 @@ function expense(e){
     };
     const token = localStorage.getItem('token');
     axios
-        .post('http://52.36.97.102:3000/expense/add-expense', expenseDetails, {headers : { Autherization : token}})
+        .post('http://localhost:3000/expense/add-expense', expenseDetails, {headers : { Autherization : token}})
         .then(res => {
             showOnScr(res.data.expense);
         })
@@ -50,7 +50,7 @@ function parseJwt(token) {
 //              showleaderbord();
 //     }
 //     axios
-//         .get(`http://52.36.97.102:3000/expense/add-expense?page=${page}&?pageSize=${pageSize}`, { headers : { Autherization: token}})
+//         .get(`http://localhost:3000/expense/add-expense?page=${page}&?pageSize=${pageSize}`, { headers : { Autherization: token}})
 //         .then(res => {
 //            // console.log(res.data);
 //             for(let i=0; i<res.data.expenses.length; i++){
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const page = 1;
 
     axios
-        .get(`http://52.36.97.102:3000/expense/add-expense?page=${page}&pageSize=${preferredPageSize}`, {
+        .get(`http://localhost:3000/expense/add-expense?page=${page}&pageSize=${preferredPageSize}`, {
             headers: { Autherization: token }
         })
         .then(res => {
@@ -160,7 +160,7 @@ function getProducts(page){
      const token = localStorage.getItem('token');
      const itemsContainer = document.getElementById('items');
     axios
-        .get(`http://52.36.97.102:3000/expense/add-expense?page=${page}&?${pageSize}`,{ headers : { Autherization: token}})
+        .get(`http://localhost:3000/expense/add-expense?page=${page}&?${pageSize}`,{ headers : { Autherization: token}})
         .then(res => {
             itemsContainer.innerHTML = '';
             for(let i=0; i<res.data.expenses.length; i++){
@@ -187,7 +187,7 @@ function showOnScr(expense){
 function deleteExpense(expenseId){
     const token = localStorage.getItem('token');
     axios
-        .delete(`http://52.36.97.102:3000/expense/add-expense/${expenseId}`, { headers: { Autherization: token}})
+        .delete(`http://localhost:3000/expense/add-expense/${expenseId}`, { headers: { Autherization: token}})
         .then(res => {
             removeExpense(expenseId);
         })
@@ -216,7 +216,7 @@ function removeExpense(expenseId){
 
         inputEle.onclick = async() => {
             const token = localStorage.getItem('token');
-            const userLeaderboardArray = await axios.get('http://52.36.97.102:3000/premium/showleaderbord', { headers: { Autherization: token}});
+            const userLeaderboardArray = await axios.get('http://localhost:3000/premium/showleaderbord', { headers: { Autherization: token}});
             console.log(userLeaderboardArray);
     
             const leaderboardEle = document.getElementById('leaderboard-list');
@@ -235,13 +235,13 @@ function removeExpense(expenseId){
 document.getElementById('rzp-button1').onclick = async function (e) {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    const res = await axios.get('http://52.36.97.102:3000/parchase/buyprmium', { headers: { Autherization: token}})
+    const res = await axios.get('http://localhost:3000/parchase/buyprmium', { headers: { Autherization: token}})
     console.log(res);
     const options = {
         "key" : res.data.key_id,
         "order_id" : res.data.order.id,
         "handler" : async function (res) {
-            const response = await axios.post('http://52.36.97.102:3000/parchase/updateprmium', {
+            const response = await axios.post('http://localhost:3000/parchase/updateprmium', {
                 order_id : options.order_id,
                 payment_id : res.razorpay_payment_id
                 }, { headers: { Autherization: token}})
@@ -267,7 +267,7 @@ document.getElementById('rzp-button1').onclick = async function (e) {
 function download(){
     const token = localStorage.getItem('token');
     axios
-        .get('http://52.36.97.102:3000/user/download', { headers : { Autherization: token }})
+        .get('http://localhost:3000/user/download', { headers : { Autherization: token }})
         .then((res) => {
             if(res.status === 200){
                 var a = document.createElement("a");
@@ -295,7 +295,7 @@ function numberDownloaded(){
     }
     const token = localStorage.getItem('token');
     axios
-    .post('http://52.36.97.102:3000/user/timesdownload',  dateDetails , { headers : { Autherization: token }})
+    .post('http://localhost:3000/user/timesdownload',  dateDetails , { headers : { Autherization: token }})
     .then(res => {
         console.log(res.data.length);
     })

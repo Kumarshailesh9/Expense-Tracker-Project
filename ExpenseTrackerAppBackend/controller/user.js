@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 const jwt = require(('jsonwebtoken'));
 
 
-exports.getUser = async (req, res) => {
-    const user = await User.findAll();
+// exports.getUser = async (req, res) => {
+//     const user = await User.findAll();
 
-    res.json(user);
-};
+//     res.json(user);
+// };
 
 exports.postUser = async (req, res) => {
     try {

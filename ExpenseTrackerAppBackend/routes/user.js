@@ -5,7 +5,7 @@ const { getUser, postUser, postLogin } = require('../controller/user');
 
 const userRoute = express.Router();
 
-userRoute.get('/user/signup', getUser);
+//userRoute.get('/user/signup', getUser);
 
 userRoute.post('/user/signup', postUser);
 

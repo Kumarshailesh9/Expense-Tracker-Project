@@ -9,12 +9,14 @@ function login(e){
     };
 
    axios
-    .post('http://52.36.97.102:3000/user/login', loginDetails)
+    .post('http://localhost:3000/user/login', loginDetails)
     .then(res => {
         console.log(res.data);
         localStorage.setItem('token', res.data.token);
         alert('User Login SuccessFully')
         window.location.href = '../expense/expense.html';
+       
+
     })
     .catch(err => {
         console.log(err);
