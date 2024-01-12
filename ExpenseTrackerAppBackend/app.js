@@ -48,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get((req, res) => {
     console.log('url', req.url);
+    console.log('Extra log add successfully!')
     res.sendFile(path.join(__dirname, `public/${req.url}`));
     
 })
